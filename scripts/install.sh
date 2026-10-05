@@ -69,17 +69,21 @@ done
 # 4. Config overrides (flatten agents/<a>/config.yaml into `config set` calls)
 for a in coordinator researcher coder; do
   "$PY" - "$REPO/agents/$a/config.yaml" <<'PYEOF' | while IFS=$'\t' read -r k v; do hermes_p "$a" config set "$k" "$v" </dev/null >/dev/null; done
-import sys, yaml
+import sys, yaml, json
 def walk(d, pre=""):
     for k, v in d.items():
         key = f"{pre}.{k}" if pre else k
         if isinstance(v, dict): yield from walk(v, key)
+        elif isinstance(v, list): yield key, json.dumps(v)
         else: yield key, str(v).lower() if isinstance(v, bool) else str(v)
 for k, v in walk(yaml.safe_load(open(sys.argv[1]))): print(f"{k}\t{v}")
 PYEOF
   echo "  config applied: $a"
 done
 
-# 5. (Re)start the multiplexed gateway: one process serves all three profiles
+# 5. No clarifying questions in Telegram: a bot waiting on a human button blocks the whole hand-off
+for a in coordinator researcher coder; do hermes_p "$a" tools disable clarify --platform telegram </dev/null >/dev/null; done
+
+# 6. (Re)start the multiplexed gateway: one process serves all three profiles
 hermes gateway restart || hermes gateway start
 echo "Done. Check: hermes status"

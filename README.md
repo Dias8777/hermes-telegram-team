@@ -27,7 +27,7 @@ Coordinator:  📋 Plan: causal self-attention — explanation + demo
               @researcher_bot [T1] Explain causal (masked) self-attention ... cite sources
               @coder_bot [T2] Implement causal scaled dot-product attention in NumPy ...
 Researcher:   @mdl_dias_aitu_bot [T1 DONE] <explanation + links>
-Coordinator:  NO_REPLY  (silent: T2 still missing)
+Coordinator:  ⏳ T1 received, waiting for T2.   (status line, no mentions -> wakes nobody)
 Coder:        @mdl_dias_aitu_bot [T2 DONE] <code + real output>
 Coordinator:  ✅ Final answer ... (no bot mentions -> conversation ends)
 ```
@@ -36,8 +36,8 @@ Coordinator:  ✅ Final answer ... (no bot mentions -> conversation ends)
 * **Hand-off** = an @mention of the specialist at the start of a line, with a task id `[Tn]`.
 * **Report** = specialist @mentions the coordinator once with `[Tn DONE]` / `[Tn FAILED]`.
 * **Coordinator knows it is finished** when every `Tn` from its last plan has a report in the shared
-  group session (`group_sessions_per_user: false`). Until then it answers `NO_REPLY`, which Hermes
-  swallows (nothing is sent).
+  group session (`group_sessions_per_user: false`). Until then it posts a one-line status with **no
+  @mentions** (Hermes refuses a silent `NO_REPLY` on a chat turn), so no bot is woken.
 * **No infinite loops**, four layers:
   1. Protocol: the final answer never mentions a bot; specialists never mention each other.
   2. `bots_require_mention: true` — a bot's quote-reply alone does not wake another bot, only an explicit @mention.
