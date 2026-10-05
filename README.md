@@ -4,6 +4,8 @@ Assignment 1, Modern Deep Learning (AITU). A small team of AI agents, each a sep
 [Hermes Agent](https://github.com/NousResearch/hermes-agent) profile with its own Telegram bot,
 that cooperate in a group chat by **@mentioning each other**.
 
+**Author:** Dias Abit (solo submission).
+
 Use case: a **study helper for the Deep Learning course**. A student asks a question like
 *"Explain causal self-attention and show it in code"*; the team returns an explanation with
 sources **and** runnable code with its real output.
