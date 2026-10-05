@@ -82,14 +82,21 @@ cp secrets.env.example secrets.env   # fill in tokens + your Telegram user id
 ./scripts/install.sh
 hermes status                        # should list default, researcher, coder as served
 ```
+`install.sh` also installs NumPy into Hermes' venv (the coder's `execute_code` runs there).
+After changing any `SOUL.md`, send `/new` in the group: a Hermes session keeps the system prompt
+it started with.
 
 ### 4. Try it
 In the group: `@mdl_dias_aitu_bot Explain causal self-attention and show it in NumPy code`.
 
+## Demo
+A real run (request → plan → two reports → final answer in 59 s) is in
+[`docs/demo-transcript.md`](docs/demo-transcript.md), with screenshots in `docs/screenshots/`.
+
 ## Models
 All agents use `nvidia/nemotron-3-super-120b-a12b:free` via OpenRouter: free, 120B MoE
 (12B active), reliable tool calling. Limitation: OpenRouter's free tier allows **50 requests/day per
-key** (shared by all three agents); one team request costs roughly 15–30 model calls. With $10 of
+key** (shared by all three agents); one team request costs roughly 8–15 model calls. With $10 of
 credit the limit becomes 1000/day. The model is set per profile, so e.g. the coordinator could use a
 stronger model and the specialists a cheaper one.
 

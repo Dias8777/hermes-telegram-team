@@ -84,6 +84,10 @@ done
 # 5. No clarifying questions in Telegram: a bot waiting on a human button blocks the whole hand-off
 for a in coordinator researcher coder; do hermes_p "$a" tools disable clarify --platform telegram </dev/null >/dev/null; done
 
-# 6. (Re)start the multiplexed gateway: one process serves all three profiles
+# 6. NumPy for the coder: execute_code runs in Hermes' own venv
+"$HOME/.hermes/bin/uv" pip install -q --python "$HOME/.hermes/hermes-agent/venv/bin/python" numpy || echo "warn: numpy install failed"
+
+# 7. (Re)start the multiplexed gateway: one process serves all three profiles
 hermes gateway restart || hermes gateway start
 echo "Done. Check: hermes status"
+echo "If the group already had a conversation, send /new there: sessions keep the SOUL they started with."
