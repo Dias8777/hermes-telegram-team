@@ -51,7 +51,7 @@ for a in coordinator researcher coder; do
   tok=$(env_get "$home/.env" TELEGRAM_BOT_TOKEN)
   [ -n "$tok" ] || { echo "No Telegram token for $a"; exit 1; }
   [ -n "${TELEGRAM_ALLOWED_USERS:-}" ] && env_set "$home/.env" TELEGRAM_ALLOWED_USERS "$TELEGRAM_ALLOWED_USERS"
-  [ -n "${OPENROUTER_API_KEY:-}" ] && env_set "$home/.env" OPENROUTER_API_KEY "$OPENROUTER_API_KEY"
+  [ -n "${GEMINI_API_KEY:-}" ] && env_set "$home/.env" GEMINI_API_KEY "$GEMINI_API_KEY"
   u=$(bot_username "$tok"); printf -v "U_$a" "%s" "$u"
   echo "  $a -> @$u"
 done

@@ -3,7 +3,8 @@
 # (hermes -p <profile> config set <key> <value>). Secrets live in the profile's .env, never here.
 
 model:
-  default: nvidia/nemotron-3-super-120b-a12b:free   # via OpenRouter (OPENROUTER_API_KEY)
+  provider: gemini                # Google AI Studio, free tier (GEMINI_API_KEY)
+  default: gemini-3.8-flash
 
 # One shared session per group chat (not per sender), so a bot sees the reports
 # that other bots post in the same chat as part of one conversation.

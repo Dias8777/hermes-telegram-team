@@ -66,7 +66,7 @@ replaces them with the real bot usernames (read via Telegram `getMe`).
 ### 1. Hermes
 ```bash
 curl -fsSL https://raw.githubusercontent.com/NousResearch/hermes-agent/main/scripts/install.sh | bash
-hermes setup        # choose OpenRouter, paste OPENROUTER_API_KEY
+hermes setup        # choose "Google AI Studio", paste GEMINI_API_KEY (free key from aistudio.google.com)
 ```
 
 ### 2. Telegram bots (in @BotFather)
@@ -96,11 +96,18 @@ A real run (request → plan → two reports → final answer in 59 s) is in
 [`docs/demo-transcript.md`](docs/demo-transcript.md), with screenshots in `docs/screenshots/`.
 
 ## Models
-All agents use `nvidia/nemotron-3-super-120b-a12b:free` via OpenRouter: free, 120B MoE
-(12B active), reliable tool calling. Limitation: OpenRouter's free tier allows **50 requests/day per
-key** (shared by all three agents); one team request costs roughly 8–15 model calls. With $10 of
-credit the limit becomes 1000/day. The model is set per profile, so e.g. the coordinator could use a
-stronger model and the specialists a cheaper one.
+All three agents use **`gemini-3.8-flash`** through Google AI Studio (`model.provider: gemini`):
+fast, strong tool calling (web search, `execute_code`), good Russian, and a free tier that is
+enough for development and demos. Rate limits apply per minute and per day, shared by the three agents.
+
+| Phase | Model | Why we changed |
+| --- | --- | --- |
+| First version | `nvidia/nemotron-3-super-120b-a12b:free` via OpenRouter (120B MoE, 12B active) | free, decent tool calling |
+| Now | `gemini-3.8-flash` via Google AI Studio | OpenRouter free tier is **50 requests/day per account** across *all* free models; one team request costs ≈ 8–15 model calls, so only 3–5 runs a day were possible |
+
+The model is set per profile, so the coordinator could use a stronger model and the specialists a
+cheaper one. A small local model (e.g. `qwen3.5:4b` in Ollama) costs nothing, but it follows the
+`[Tn DONE]` protocol and tool calls much less reliably — see `docs/failures.md`.
 
 ## Memory
 Each profile has its own memory (`<profile home>/memories/MEMORY.md`, `USER.md`) and its own

@@ -1,7 +1,7 @@
 # Demo transcript — live run, 2026-10-05 (group chat, all three bots)
 
 Exported from the coordinator's shared group session (`state.db`, session `agent:main:telegram:group:<chat>`).
-Times are local (UTC+5). Total wall time from human request to final answer: **59 s**.
+Times are local (UTC+5). This run used the first model, `nemotron-3-super-120b-a12b:free` via OpenRouter. Total wall time from human request to final answer: **59 s**.
 
 Screenshots of the same run: `docs/screenshots/`.
 
