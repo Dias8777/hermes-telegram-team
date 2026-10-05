@@ -1,0 +1,24 @@
+# researcher — web_search + web_extract, short sourced explanations
+# These keys are applied on top of the profile's default Hermes config by scripts/install.sh
+# (hermes -p <profile> config set <key> <value>). Secrets live in the profile's .env, never here.
+
+model:
+  default: nvidia/nemotron-3-super-120b-a12b:free   # via OpenRouter (OPENROUTER_API_KEY)
+
+# One shared session per group chat (not per sender), so a bot sees the reports
+# that other bots post in the same chat as part of one conversation.
+group_sessions_per_user: false
+
+display:
+  # A message that arrives while the agent is busy is queued, not used to interrupt the
+  # current turn (two reports can arrive almost at once).
+  busy_input_mode: queue
+
+platforms:
+  telegram:
+    extra:
+      require_mention: true          # in groups, react only to @mentions / replies
+      exclusive_bot_mentions: true   # a message that @mentions other bots is ignored by this one
+      allow_bots: mentions           # accept messages from other bots, but only when they @mention us
+      bots_require_mention: true     # a bot's quote-reply alone is NOT enough -> no reply ping-pong
+      reply_to_mode: first
